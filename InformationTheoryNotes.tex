@@ -1,0 +1,870 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb}
+\usepackage[english]{babel}
+% \usepackage{boisik}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{centernot}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{empheq}
+
+
+%\usepackage{hyperref} %Uncomment for Hyperlinked Table of Contents.
+
+\usepackage{mathpazo}
+\usepackage[light]{CormorantGaramond}
+%\usepackage{tgbonum}
+%\usepackage{cmbright}
+%\usepackage{textcomp}
+\usepackage{sectsty}
+\sectionfont{\fontsize{20}{20}\selectfont}
+%\titlefont{\fontsize{20}{20}\selectfont}
+%\usepackage{mathpazo} 
+
+\usepackage{hyperref} %Uncomment for Hyperlinked Table of Contents.
+
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=black,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+		colframe=red,colback=white,arc=0pt,boxrule=1pt}}
+
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+\subsectionfont{\fontsize{15}{15}\selectfont}
+
+\usepackage{xcolor}
+
+\newcommand*{\myfont}{\fontfamily{cmr}\selectfont}
+\newcommand{\id}[1]{{\myfont \text{id}_{#1}}}
+\newcommand{\notset}[0]{\setminus}
+
+
+
+\title{Information Theory\\
+	\large Definitions, Propositions, Theorems \& Proofs}
+\author{Animesh Renanse}
+\date{\today}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{definition}{$\boxed{\star}$ Definition}
+\newcommand{\tit}[1]{\textit{#1}}
+\newtheorem{theorem}{$\boxed{\boxed{\circledast}}$ Theorem}
+
+\newcommand{\nll}[0]{\newline\newline}
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Remark}}
+
+\theoremstyle{definition}
+\newtheorem{corollary}{$ \to $ Corollary}
+
+\theoremstyle{definition}
+\newtheorem{proposition}{$\checkmark$ Proposition}
+
+\theoremstyle{definition}
+\newtheorem{lemma}{Lemma}
+
+\usepackage{mathtools}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\theor}[0]{\boxed{\textbf{\textit{Theorem}}}}
+\newcommand{\algo}[0]{\boxed{\textbf{\textit{Algorithm}}}}
+\newcommand{\assum}[0]{\boxed{\textbf{\textit{Assumption}}}}
+\newcommand{\formula}[0]{\boxed{\textbf{\textit{Formula}}}}
+\newcommand{\defin}[0]{\boxed{\textbf{\textit{Definition}}}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\newcommand{\vect}[1]{\bm{#1}}
+\newcommand{\mat}[1]{\bm{\mathrm{#1}}}
+\newcommand{\norm}[1]{\Vert #1 \Vert}
+\newcommand{\innerp}[2]{\langle #1, #2 \rangle}
+\newcommand{\expec}[2]{\mathbb{E}_{#1}\left[ #2\right]}
+\newcommand{\seq}[1]{\left\{#1\right\}}
+\newcommand{\pder}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\der}[2]{\frac{d #1}{d #2}}
+\newcommand{\estif}[1]{\hat{\theta}\left( #1 \right)}
+\newcommand{\esti}[0]{\hat{\theta}}
+
+\newcommand{\supp}[1]{\mathcal{#1}}
+\newcommand{\given}{\vert}
+\newcommand{\KL}[2]{D\left ( #1 \Vert #2\right )}
+\newcommand{\unif}[1]{\text{Unif}\left(#1\right)}
+\newcommand{\tset}[2]{A_{#1}^{(#2)}}
+\renewcommand{\abs}[1]{\left \vert #1\right \vert}
+
+
+\newcommand{\defeq}[1]{
+		\tcbhighmath[boxrule=2pt,arc=0pt,colback=white,colframe=black]{\begin{aligned}
+				#1
+		\end{aligned}}
+	}
+\newcommand{\theoreq}[1]{
+		\tcbhighmath[boxrule=2pt,arc=0pt,colback=blue!10!white,colframe=black]{\begin{aligned}
+				#1
+		\end{aligned}}}
+
+
+
+
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+
+\begin{document}
+	\begin{titlepage}
+		{\scshape\LARGE Indian Institute of Technology, Guwahati \par}
+		\vspace{1cm}
+		{\scshape\Large Pre-Final Year : $ 6^{th} $ Semester\par}
+		\vspace{1.5cm}
+		{\Huge\bfseries Information Theory \& Coding\par}
+		\vspace{2cm}
+		{\Large\itshape Animesh Renanse\par}
+		\vfill
+		Instructed by\par
+		Prof.~Tony \textsc{Jacob}
+		
+		\vfill
+		
+		% Bottom of the page
+		{\large \today\par}
+	\end{titlepage}
+	\newpage
+	\pagestyle{empty}
+	\tableofcontents
+	\newpage
+%\chapter{Information Theory}
+\section{Entropy, Relative Entropy \& Mutual Information}
+\subsection{Entropy}
+Entropy is the measure of \textit{uncertainty} of a random variable.
+
+\hrulefill
+\begin{definition}
+	(\textbf{Entropy}) The entropy $H\left( X \right) $ of a discrete random variable $X$ is defined by
+\begin{equation}
+	\defeq{H\left( X \right) &= -\sum_{x \in \supp{X}}^{} p\left( x \right) \log_2 p\left( x \right) }
+\end{equation}
+	where $\supp{X}$ is the support of the variable $X$. 
+\end{definition}
+\hrulefill
+\begin{remark}
+	Few things to note:
+	\begin{itemize}
+		\item {If the base of the logarithm is $b$, we denote the entropy as $H_b\left( X \right)$, if not, then it is assumed to be $2$.}
+		\item {If the base of the logarithm is $e$, then the entropy is measured in \textit{\textbf{nats}}.}
+		\item{We also denote the following:
+	\[H_2(p):= p\log\frac{1}{p} + (1-p)\log\frac{1}{1-p}\]	
+	}
+	\end{itemize}
+\end{remark}
+Now, discussion happens on the case when $g\left( X \right) = \log \frac{1}{p\left( X \right) }$ and the expected value of $g\left( X \right) $, which is $\mathbb{E}g\left( X \right)$.
+\begin{remark}
+	The entropy of $X$ can also be interpreted as the expected value of the random variable  $\log \frac{1}{p\left( X \right) }$, where $X$ is drawn according to pmf $p\left( x \right) $ 
+	\begin{equation*}
+		\begin{split}
+			H\left( X \right) &= \mathbb{E}_p \log \frac{1}{p\left( X \right) }
+		\end{split}
+	\end{equation*}
+\end{remark}
+
+\hrulefill
+\begin{lemma}
+	$H\left( X \right) \ge  0$.
+\end{lemma}
+\begin{proof}
+	Since $ 0\le p\left( X \right) \le 1$, then $\log \frac{1}{p\left( X \right) } \ge 0$, hence $H\left( X \right) $ is always $\ge 0$.
+\end{proof}
+\begin{lemma}
+	$H_b\left( X \right) = \left( \log_b a \right)H_a\left( X \right)$.
+\end{lemma}
+\begin{proof}
+	Remember that $\log_b a = \frac{\log_b p}{\log_a p}$.
+\end{proof}
+\subsection{Joint Entropy \& Conditional Entropy}
+Extending the Definition 1 to a \emph{pair of random variables}.
+
+\hrulefill
+\begin{definition}
+	(\textbf{Joint Entropy}) Let joint entropy $ H(X,Y) $ of a pair of discrete random variables $ (X,Y) $ with a joint distribution $ p(x,y) $ is defined as
+	\begin{equation}
+		\defeq{H(X,Y) &= -\sum_{x\in \supp{X}}\sum_{y\in \supp{Y}} p(x,y) \log p(x,y)\\
+			&= -\expec{}{\log p(X,Y)}}
+	\end{equation}
+\end{definition}
+
+\hrulefill
+
+\begin{definition}
+	(\textbf{Conditional Entropy}) If $ (X,Y)  \sim p(x,y)$, then the conditional entropy $ H(Y\vert X) $ is defined as
+\begin{equation}
+		\defeq{H(Y\vert X) &= \sum_{x\in \supp{X}} p(x) H(Y\vert X = x)\\
+		&= -\sum_{x\in \supp{X}} p(x) \sum_{y\in \supp{Y}} p(y\vert x) \log p(y\vert x)\\
+		&= -\sum_{x\in \supp{X}} \sum_{y\in \supp{Y}} p(x,y) \log p(y\vert x) \;\; (\star)\\
+		&= -\expec{p(x,y)}{\log p(Y\given X)} }
+\end{equation}
+\end{definition}
+\begin{remark}
+	This is just the expected value of the entropies of the conditional distribution.
+\end{remark}
+\hrulefill
+\begin{theorem}
+	\label{T1}
+	\textit{(\textbf{Chain Rule})} For a random vector $ (X,Y) $, we have
+\begin{equation}
+	\theoreq{H(X,Y) = H(X) + H(Y\given X)} 
+\end{equation}
+\end{theorem}
+\begin{proof}
+	It's trivial to see following by the basic properties of conditional distributions:
+	\begin{equation*}
+		\begin{split}
+			H(X,Y) &= -\sum_{x\in \supp{X}}\sum_{y\in \supp{Y}} p(x,y) \log p(x,y)\\
+			&=  -\sum_{x\in \supp{X}}\sum_{y\in \supp{Y}} p(x,y) \log p(y\given x)  -\sum_{x\in \supp{X}}\sum_{y\in \supp{Y}} p(x,y) \log p(x)\\
+			&= H(Y\given X)  -\sum_{x\in \supp{X}}\log p(x)\sum_{y\in \supp{Y}} p(x,y)\\
+			&= H(Y\given X) -\sum_{x\in \supp{X}} \log p(x) \; p(x)\\
+			&= H(Y\given X) + H(X)
+		\end{split}
+	\end{equation*}
+Hence proved.
+\end{proof}
+\begin{corollary}
+	We also have that 
+	\[\boxed{H(X, Y\given Z) = H(X\given Z) + H(Y\given X, Z)}\]
+\end{corollary}
+\begin{proof}
+	Simply note : 
+	\begin{equation*}
+		\begin{split}
+			H(X,Y\given Z) &= H(X,Y,Z) - H(Z)\;\;\;\;\;\;\text{(Theorem 1)}\\
+			&= H(Y\given X,Z) + H(X,Z) - H(Z)\\
+			&= H(Y\given X, Z) + H(X\given Z)
+		\end{split}
+	\end{equation*}
+Hence proved.
+\end{proof}
+\hrulefill
+\subsection{Relative Entropy \& Mutual Information}
+\begin{definition}
+	(\textbf{Relative Entropy}) The relative entropy or Kullback-Leibler distance between two probability mass functions $ p(x) $ and $ q(x) $ is defined as
+	\begin{equation}
+		\defeq{\KL{p}{q} &= \sum_{x\in \supp{X}} p(x) \log \frac{p(x)}{q(x)}	\\
+			&= \expec{p}{\log \frac{p(X)}{q(X)}}} 
+	\end{equation}
+\end{definition}
+\begin{remark}
+	Few things to note:
+	\begin{itemize}
+		\item{The relative entropy $ \KL{p}{q} $ is the measure of the \emph{inefficiency} of assuming that the distribution is $ q $ when the true distribution is $ p $.}
+		\item{As much it might be tempting to say KL-divergence as a distance, it's not, because it is not symmetric and doesn't follows triangle inequality. However, $ \KL{p}{q} = 0 \iff p=q $.}
+	\end{itemize}
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Mutual Information}) Consider two random variables $ X $ and $ Y $ with a joint probability mass function $ p(x,y) $ and marginal probability mass functions $ p(x) $ and $ p(y) $. The mutual information $ I(X;Y) $ is the relative entropy between joint distribution $ p(x,y) $ and the product distribution $ p(x)p(y) $. That is,
+\begin{equation}
+	\defeq{I(X;Y) &= \sum_{x\in \supp{X}} \sum_{y\in \supp{Y}} p(x,y) \log\frac{p(x,y)}{p(x)p(y)}\\
+		&=  \KL{p(x,y)}{p(x)p(y)} \\
+		&= \expec{p(x,y)}{\log \frac{p(x,y)}{p(x)p(y)}}}
+\end{equation}
+\end{definition}
+\begin{remark}
+	Few things to note:
+	\begin{itemize}
+		\item{This is a measure of amount of information one variable contains about the other. We can see this as we are measuring the \emph{distance} between the assumption whether $ X $ and $ Y $ are independent to the true joint distribution.}
+		\item{Hence it is also the reduction in uncertainty of one random variable due to the knowledge of the other, as shown by Theorem 2, $ 1^{st} $ eq.}
+	\end{itemize}
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Conditional Mutual Information}) The conditional mutual information of random variables $ X $ and $ Y $ given $ Z $ is defined by
+	\begin{equation}
+		\defeq{I(X;Y\given Z) &= H(X\given Z) - H(X\given Y, Z)\\
+	&= 	\expec{p(x,y,z)}{\frac{p(X,Y\given Z)}{p(X\given Z)p(Y\given Z)}}
+	} 
+	\end{equation}
+\end{definition}
+\begin{remark}
+	Conditional Mutual Information follows chain rule for Information (Theorem 4).
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Conditional Relative Entropy}) For joint probability mass function $ p(x,y) $ and $ q(x,y) $, the conditional relative entropy $ \KL{p(y\given x)}{q(y\given x)} $ is the average of the relative entropies between the conditional probability mass functions $ p(y\given x) $ and $ q(y\given x) $ averaged over the probability mass function $ p(x) $. That is,
+	\begin{equation}
+		\defeq{\KL{p(y\given x)}{q(y\given x)}&= \sum_{x\in \supp{X}} p(x) \sum_{y\in \supp{Y}} p(y\given x) \log\frac{p(y\given x)}{q(y\given x)}\\
+		&= \expec{p(x,y)}{\log\frac{p(y\given x)}{q(y\given x)}} }
+	\end{equation}
+\end{definition}
+\begin{remark}
+	Note that the notation for conditional relative entropy $ \KL{p(y\given x)}{q(y\given x)} $ does not include the fact that expectation is taken over $ X $. So it must be assumed accordingly from the context.
+\end{remark}
+\hrulefill
+\subsection{Relationship between Entropy \& Mutual Information}
+\begin{theorem}\label{T2}
+(\textit{\textbf{Mutual Information \& Entropy}}) The following are the relations between the two notions of information:
+%\begin{subequations}
+%	\begin{empheq}[box=\widefbox]{align}
+%		I(X;Y) &= H(X) - H(X\given Y)\\
+%		I(X;Y) &= H(Y) - H(Y\given X)\\
+%		I(X;Y) &= H(X) + H(Y) - H(X,Y)\\
+%		I(X;Y) &= I(Y;X)\\
+%		I(X;X) &= H(X)
+%	\end{empheq}
+%\end{subequations}
+\begin{equation}
+	\theoreq{I(X;Y) &= H(X) - H(X\given Y)\\
+		I(X;Y) &= H(Y) - H(Y\given X)\\
+		I(X;Y) &= H(X) + H(Y) - H(X,Y)\\
+		I(X;Y) &= I(Y;X)\\
+		I(X;X) &= H(X) }
+\end{equation}
+\end{theorem}
+\begin{proof}
+	We have the following:
+	\begin{equation*}
+		\begin{split}
+			I(X;Y) &= \sum_{x\in \supp{X}} \sum_{y\in \supp{Y}} p(x,y) \log\frac{p(x,y)}{p(x)p(y)}\\
+			&= \sum_{x\in \supp{X}} \sum_{y\in \supp{Y}}p(x,y) \log \frac{p(x\given y)}{p(x)}\\
+			&= \sum_{x\in \supp{X}} \sum_{y\in \supp{Y}} p(x,y)\log p(x\given y) - \sum_{x\in \supp{X}} \sum_{y\in \supp{Y}}p(x,y) \log p(x)\\
+			&= -H(X\given Y) + \sum_{x\in \supp{X}} p(x) \log p(x)\\
+			&= -H(X\given Y) + H(X)\\
+			&= -H(X,Y) + H(Y) + H(X)\;\;\;\;\;\;\text{(Theorem 1)}
+		\end{split}
+	\end{equation*}
+By symmetry, $ I(X;Y) = I(Y;X) $ and since 
+\begin{equation*}
+	\begin{split}
+		H(X\given X) &= -\sum_{x\in \supp{X}}p(x) \log p(x\given x)\\
+		&= -\sum_{x\in \supp{X}} p(x) \log 1\\
+		&= 0
+	\end{split}
+\end{equation*}
+therefore, $ I(X;X) = H(X) $.
+\end{proof}
+\hrulefill
+\subsection{Chain Rules}
+\emph{Entropy of collection of random variables is the sum of conditional entropies!}
+\begin{theorem}
+	\label{T3}
+	(\textbf{\textit{Chain Rule for Entropy}})  Let $ X_1,X_2,\dots,X_n $ be drawn according to $ p(x_1,x_2,\dots, x_n) $. Then,
+\begin{equation}
+	\theoreq{H(X_1,X_2,\dots,X_n) = \sum_{i=1}^n H(X_i \given X_{i-1},\dots,X_1)}
+\end{equation}
+\end{theorem}
+	\begin{proof}
+		This is an easy consequence of Theorem 1 over collection of random variables:
+		\begin{equation*}
+			\begin{split}
+				H(X_1,X_2) &= H(X_1) + H(X_2\given X_1)\\
+				H(X_1,X_2,X_3) &= H(X_1) + H(X_2,X_3\given X_1)\\
+				H(X_1,X_2,X_3) &= H(X_1) + H(X_2\given X_1) + H(X_3\given X_2, X_1) \;\;\;\;\;\text{(Corollary 1)}\\
+				\vdots &= \vdots\\
+				H(X_1,\dots,X_n) &= H(X_1) + H(X_2\given X_1) + \dots + H(X_n \given X_{n-1},\dots, X_1)
+			\end{split}
+		\end{equation*}
+	Hence proved.
+	\end{proof}
+\hrulefill
+\begin{theorem}
+	\label{T4}
+	(\textbf{Chain Rule for Information}) We have the following for mutual information:
+	\begin{equation}
+		\theoreq{I(X_1,X_2,\dots,X_n; Y) = \sum_{i=1}^n I(X_i ; Y\given X_{i-1}, X_{i-2},\dots, X_1)}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	This is a consequence of Theorem 2, $ 1^{st} $ equation:
+	\begin{equation*}
+		\begin{split}
+			I(X_1,\dots,X_n; Y) &= H(X_1,\dots,X_n) - H(X_1,\dots,X_n \given Y)\\
+			&=  \sum_{i=1}^n H(X_i \given X_{i-1},\dots,X_1) -  \sum_{i=1}^n H(X_i \given X_{i-1},\dots,X_1,Y)\;\;\;\;\text{(Theorem 3)}\\
+			&= \sum_{i=1}^n I(X_i ; Y \given X_{i-1},\dots,X_1)
+		\end{split}
+	\end{equation*}
+Hence proved.
+\end{proof}
+\hrulefill
+\begin{theorem}
+	(\textbf{Chain Rule for Relative Entropy})  The relative entropy between two joint distributions on a pair of random variables can be expanded as the sum of a relative entropy and a conditional relative entropy. That is,
+	\begin{equation}
+		\theoreq{\KL{p(x,y)}{q(x,y)} = \KL{p(x)}{q(x)} + \KL{p(y\given x)}{q(y\given x)}}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	This is, again, a direct result of a basic property of conditional distributions:
+	\begin{equation*}
+		\begin{split}
+			\KL{p(x,y)}{q(x,y)} &= \expec{p(x,y)}{\log \frac{p(x,y)}{q(x,y)}}\\
+			&= \expec{p(x,y)}{\log\frac{p(y\given x) p(x)}{q(y\given x)q(x)}}\\
+			&= \expec{p(x,y)}{\log \frac{p(y\given x)}{q(y\given x)}} + \expec{p(x,y)}{\log \frac{p(x)}{q(x)}}\\
+			&= \KL{p(y\given x)}{q(y\given x)} + \KL{p(x)}{q(x)}
+		\end{split}
+	\end{equation*}
+Hence proved.
+\end{proof}
+\hrulefill
+\subsection{Jensen's Inequality}
+\emph{This inequality would be helpful in later sections. One may remember this from Expectation-Maximization Algorithm.} First remember the notion of functional convexity.
+\subsubsection{Convex Functions}
+\begin{definition}
+	(\textbf{Convex Function}) A function $ f(x) $ is said to be convex over an interval $ (a,b) $ if for any points $ x_1,x_2 \in(a,b) $ and $ 0\le \lambda \le 1 $, we must have that:
+	\begin{equation}
+		\begin{split}
+			\defeq{f(\lambda x_1 + (1-\lambda)x_2) \le \lambda f(x_1) + (1-\lambda) f(x_2)}
+		\end{split}
+	\end{equation}
+\end{definition}
+\begin{remark}
+	A function is \textbf{strictly convex} if above holds only for $ \lambda = 0$ or $ 1 $
+\end{remark}
+\hrulefill
+\begin{theorem}
+	If the function $ f $ has a second derivative that is non-negative (positive) over an interval, then the function is convex (strictly convex) over that interval. That is,
+	\begin{equation}
+		\theoreq{\text{If}\;f^{\prime\prime}(x) \ge 0 \;\forall\;x\in (a,b) \;&\implies\;f\;\text{is convex over $ (a,b) $.}\\
+		\text{If}\;f^{\prime\prime}(x) > 0 \;\forall\;x\in (a,b) \;&\implies\;f\;\text{is strictly convex over $ (a,b) $.}
+	}
+	\end{equation}
+\end{theorem}
+\hrulefill
+\newpage
+\begin{theorem}
+	(\textbf{Jensen's Inequality}) If $ f $ is a convex function and $ X $ is a random variable, then:
+	\begin{itemize}
+		\item { We have the following inequality\begin{equation}
+				\theoreq{\expec{p(X)}{f(x)} \ge f\left ( \expec{p(X)}{X} \right )}
+		\end{equation}}
+	\item {We also have that:
+\begin{equation}
+	\theoreq{f\;\text{is strictly convex}\;\implies \; X = \expec{p(X)}{X} \;\text{In Probability.}}
+\end{equation}
+}
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	$ \mathbb{TRIVIAL} $, by induction.
+\end{proof}
+\hrulefill
+
+\emph{The following theorem is of \textbf{fundamental importance} in Information Theory!}
+\begin{theorem}
+	(\textbf{Information Inequality}) Let $ p(x) $ and $ q(x) $ for $ x\in \supp{X} $ be two probability mass functions. Then we have the following two results:
+	\begin{equation}
+		\theoreq{\KL{p}{q} &\ge 0\\
+	\KL{p}{q} = 0 &\iff	p(x) = q(x)\;\forall\;x\in \supp{X}.
+	}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Consider two mass functions $ p(x) $ and $ q(x) $ defined on same support $ \supp{X} $. Hence,
+	\begin{equation*}
+		\begin{split}
+			-\KL{p}{q} &= -\expec{p(X)}{\log \frac{p(x)}{q(x)}}\\
+			&= -\sum_{x\in \supp{X}} p(x) \log\frac{p(x)}{q(x)}\\
+			&= \sum_{x\in \supp{X}} p(x) \log\frac{q(x)}{p(x)}\\
+			&\le \log \sum_{x\in \supp{X}} p(x) \frac{q(x)}{p(x)}\\
+			&\le \log \sum_{x\in \supp{X}} p(x)\\
+			&\le \log 1\\
+			&\le 0\\
+			\KL{p}{q} & \ge 0
+		\end{split}
+	\end{equation*}
+The other part follows trivially.
+\end{proof}
+\begin{corollary}
+	(\textbf{Non-negativity of Mutual Information}) For any two random variables $ X $ and $ Y $, we have 
+	\[\boxed{\KL{p(y\given x)}{q(y\given x)} \ge 0}\]
+	,
+	\[\boxed{\KL{p(y\given x)}{q(y\given x)} = 0\;\iff\; p(y\given x) = q(y\given x)}\]
+	,
+	\[\boxed{I(X;Y\given Z)\ge 0}\]
+	,
+	\[\boxed{I(X;Y\given Z) = 0\;\iff\;X\given Z\text{ and }Y\given Z\;\text{are independent.}}\]
+	,
+	\[\boxed{I(X;Y) \ge 0}\]
+	,
+	\[\boxed{I(X;Y) = 0 \;\iff\; X\;\text{and}\;Y\;\text{are independent.}}\]
+\end{corollary}
+\begin{proof}
+	Follows directly from the definition of $ I(X;Y) $, $ I(X;Y\given Z) $ and the Information inequality.
+\end{proof}
+\hrulefill
+\newpage
+\begin{theorem}
+	For a random variable $ X $ with sample space $ \supp{X} $, we have:
+	\begin{equation}
+		\theoreq{H(X) &\le \log\abs{\supp{X}}\\
+	H(X)= \log\abs{\supp{X}} \;&\iff\; X \sim \unif{\supp{X}} 
+	}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Define $ u(x) $ to be the uniform distribution over space $ \supp{X} $ and $ p(x) $ to be the actual probability distribution over $ \supp{X} $. Hence,
+	\begin{equation*}
+		\begin{split}
+			\KL{p}{u} &= \sum_{x\in\supp{X}}p(x)\log\frac{p(x)}{u(x)} \\
+			&= \sum_{x\in \supp{X}} p(x)\log p(x) - \sum_{x\in \supp{X}} p(x) \log u(x)\\
+			&= -H(X) + \sum_{x\in \supp{X}} p(x) \log \frac{1}{u(x)}\;\;\;\;\text{($\because u(x) = \frac{1}{\abs{\supp{X}}}$}.)\\
+			&= -H(X) + \log{\abs{\supp{X}}} \sum_{x\in \supp{X}} p(x)\\
+			&= -H(X) + \log\abs{\supp{X}}.
+		\end{split}
+	\end{equation*}
+If $ p(x) $ is uniform itself then we have that $ \KL{p}{u} = 0$, hence the second result. Since $ \KL{p}{u} \ge 0$, hence $ H(X) \le \log\abs{\supp{X}}$. 
+\end{proof}
+\hrulefill
+
+\emph{Uncertainty reduces with more information}.
+\begin{theorem}
+	For two random variables $ X $ and $ Y $, we have 
+	\begin{equation}
+		\theoreq{H(X\given Y)&\le H(X)\\
+	H(X\given Y) = H(X) \;&\iff \; X\;\text{and}\;Y\;\text{are independent.}	
+	}
+	\end{equation}
+\begin{proof}
+	Direct consequence of Mutual Information and the corollary that $ I(X;Y)\ge 0 $.
+\end{proof}
+\begin{remark}
+	Note that this theorem doesn't mean that the uncertainty about $ X $ would be reduced by just the knowledge of one instance of $ Y $. Specifically, this means that $ H(X\given Y = y) $ may be higher, lower or equal to $ H(X) $, but on average, $\sum_{y\in \supp{Y}}p(y)H(X\given Y = y) = H(X\given Y)\le H(X) $.
+\end{remark}
+\begin{corollary}
+	Let $ X_1,\dots,X_n $ be drawn according to JPMF $ p(x_1,\dots,x_n) $. Then,
+	\begin{equation}
+		\boxed{H(X_1,\dots,X_n) \le \sum_{i=1}^n H(X_i)}
+	\end{equation}
+\end{corollary}
+\hrulefill
+\newpage
+\subsection{Log-Sum Inequality}
+\begin{theorem}
+	(\textbf{Log-Sum Inequality}) For non-negative numbers $ a_1,\dots,a_n $ and $ b_1,\dots,b_n $, we have:
+	\begin{equation}
+			\theoreq{\sum_{i=1}^{n}a_i \log \frac{a_i}{b_i} \ge \left (\sum_{i=1}^n a_i\right ) \log\frac{\sum_{i=1}^n a_i}{\sum_{i=1}^n b_i}}
+	\end{equation}
+where equality is true if and only if $ \frac{a_i}{b_i} = $ constant $ \forall\;i=1,\dots,n $.
+\end{theorem}
+\begin{proof}
+	Direct consequence of strict convex nature of $ x\log x $ \& Jensen's Inequality.
+\end{proof}
+\begin{corollary}
+	The following are immediate/trivial results of Log-Sum Inequality:
+	\begin{enumerate}
+		\item {Relative entropy $ \KL{p}{q} $ is convex in the pair $ (p,q) $.}
+		\item {Entropy $ H(p) $ is a concave function of $ p $.}
+	\end{enumerate}
+\end{corollary}
+\end{theorem}
+\hrulefill
+\begin{theorem}
+	Let $ (X,Y) \sim p(x,y) = p(x)p(y\given x)$. The mutual information $ I(X;Y) $ is a concave function of $ p(x) $ for fixed $ p(y\given x) $ and a convex function of $ p(y\given x) $ for fixed $ p(x) $. 
+\end{theorem}
+\hrulefill
+\newpage
+\section{Asymptotic Equipartition Property}
+AEP is the information theoretic analogue of \emph{Law of Large Numbers} in statistics.	It divides the set of all sequences into \emph{typical set} and \emph{non-typical set} where typical set contains all those sequences whose sample entropy is close to true entropy. Moreover, if any property is true for the typical set, then it would be true for a large number of samples \emph{with high probability}.\\\\
+First, remember the notion of \emph{convergence} in statistics.
+
+\hrulefill
+\begin{definition}
+	(\textbf{Convergence of Random Variables}) Given a sequence of random variables $ X_1, X_2,\dots $, we say that the sequence $ X_1,X_2,\dots $ \textbf{\emph{converges}} to a random variable $ X $ :
+	\begin{itemize}
+		\item{\textbf{In Probability} if for all $ \epsilon >0 $, $ \Pr\left \{ \abs{X_n - X} > \epsilon\right \} \longrightarrow 0  $.}
+		\item{\textbf{In Mean Square} if $ \expec{}{(X_n - X)^2} \longrightarrow 0$.}
+		\item{\textbf{Almost Surely} if $ \Pr\left \{ \lim_{n\to \infty} X_n = X \right \} = 1 $}
+	\end{itemize}
+\end{definition}
+\hrulefill
+\subsection{The AEP Theorem}
+\begin{theorem}
+	(\textbf{AEP Theorem}) If $ X_1,X_2,\dots, X_n $ are i.i.d. random variables sampled from $ p(x) $, then we have that:
+	\begin{equation}
+		\theoreq{-\frac{1}{n}\log p(X_1,X_2,\dots,X_n) \longrightarrow H(X)\;\;\;\text{\emph{In Probability}}}
+	\end{equation}
+\end{theorem}
+\begin{proof}
+	Since $ X_i $'s are independent, hence we have that the probability of the sequence, i.e. $ p(X_1,X_2,\dots, X_n) $, are just the product of individual probabilities, that is,
+	\[p(X_1,X_2,\dots,X_n) = p(X_1)p(X_2)\dots p(X_n)\]
+	Hence, we get that,
+	\begin{equation*}
+		\begin{split}
+			-\frac{1}{n}\log p(X_1,X_2,\dots,X_n) &= -\frac{1}{n}\sum_{i} \log p(X_i)
+		\end{split}
+	\end{equation*}
+Now, by weak law of large numbers, 
+\begin{equation*}
+	\begin{split}
+		\frac{1}{n}\sum_{i} X_i &\longrightarrow \expec{p(x)}{X}\;\;\text{In Probability} 
+	\end{split}
+\end{equation*}
+Now we know that any function of independent random variables is itself independent, hence $ \log p(X_1), \dots,\log p(X_n) $ are also independent since $ p(X_i) $'s are itself function of $ X_i $. Therefore, we must have
+\[-\frac{1}{n}\sum_{i} \log p(X_i) \longrightarrow -\expec{p(x)}{\log p(X)} = H(X)\;\;\text{In Probability}\]
+Hence Proved.
+\end{proof}
+\hrulefill
+\begin{definition}
+	(\textbf{Typical Set}) The typical set $ \tset{\epsilon}{n} $ with respect to $ p(x) $ is the set of sequences $ (x_1,x_2,\dots,x_n) \in \supp{X}^n$ with the property that:
+	\begin{equation}
+		\defeq{\forall (x_1,x_2\dots,x_n)\in \tset{\epsilon}{n},\text{ we have},\;2^{-n(H(X) + \epsilon)} \le p(x_1, x_2,\dots,x_n)\le 2^{-n(H(X) - \epsilon)}}
+	\end{equation}	
+\end{definition}
+\hrulefill
+\newpage
+\subsection{Basic Properties of Typical Set}
+\begin{theorem}
+	We have the following properties of $ \tset{\epsilon}{n} $:
+	\begin{itemize}
+		\item {	\theoreq{(x_1,x_2,\dots,x_n) \in \tset{\epsilon}{n}\implies H(X)-\epsilon \le -\frac{1}{n} \log p(x_1,x_2,\dots,x_n) \le H(x)+\epsilon}
+	}
+\item {\theoreq{\Pr\left \{(X_1,\dots,X_n)\in \tset{\epsilon}{n}\right \} > 1-\epsilon\;\text{for $ n $ sufficiently large.}}}
+\item {\theoreq{\abs{\tset{\epsilon}{n}} \le 2^{n(H(X)+\epsilon)} }}
+\item {\theoreq{\abs{\tset{\epsilon}{n}} \ge (1-\epsilon)2^{n(H(X) - \epsilon)} }}
+	\end{itemize}
+\end{theorem}
+\begin{proof}
+	First part is trivial to see from the definition of $ \tset{\epsilon}{n} $. \\
+	For the second part, first note that for any sequence $ (x_1,\dots,x_n) \in\tset{\epsilon}{n} $, we have the following:
+	\begin{equation*}
+		\begin{split}
+			H(X)-\epsilon &\le -\frac{1}{n} \log p(x_1,x_2,\dots,x_n) \le H(X)+\epsilon\\
+			-\epsilon &\le -\frac{1}{n} \log p(x_1,\dots,x_n) - H(X) \le \epsilon\\
+			\epsilon&\ge \abs{-\frac{1}{n} \log p(x_1,\dots,x_n) - H(X)}. 
+		\end{split}
+	\end{equation*}
+But we know that from AEP Theorem that $ -\frac{1}{n} \log p(x_1,\dots,x_n) \to H(X)$ in probability. What that means is:
+\begin{equation*}
+	\begin{split}
+		\Pr\left \{\abs{-\frac{1}{n}\log p(x_1,\dots, x_n)- H(X)} > \epsilon \right \} &\to 0
+	\end{split}
+\end{equation*}
+This implies the following:
+\[\Pr\left \{\abs{-\frac{1}{n}\log p(x_1,\dots, x_n)- H(X)} \le \epsilon \right \} \to 1  \]
+And this implies that, from the Cauchy's definition of convergence, for all $ \delta > 0 $, $ \exists N\in\mathbb{N} $ such that
+\[\abs{\Pr\left \{\abs{-\frac{1}{n}\log p(x_1,\dots, x_n)- H(X)} \le \epsilon \right \} - 1} < \delta \;\forall\; n\ge N\]
+Since probability is always positive, hence we can write it as:
+\[\Pr\left \{\abs{-\frac{1}{n}\log p(x_1,\dots, x_n)- H(X)} \le \epsilon \right \} > 1-\delta\;\forall \; n\ge N.\]
+Hence, for a particular value of $ \delta = \epsilon>0 $, we would have $ N $ such that above condition is satisfied for all $ n\ge N $, proving the second part. \\
+The third part is easy to see:
+\begin{equation*}
+	\begin{split}
+		1 &= \sum_{(x_1,\dots,x_n)\in \supp{X}^n} p(x_1,\dots,x_n)\\
+		&\ge \sum_{(x_1,\dots,x_n)\in \tset{\epsilon}{n}} p(x_1,\dots, x_n)\;\;\;\;\text{($\because \tset{\epsilon}{n} \subseteq \supp{X}^n$)}\\
+		&\ge \sum_{(x_1,\dots,x_n)\in \tset{\epsilon}{n}} 2^{-n(H(X)+\epsilon)}\\
+		&= \abs{\tset{\epsilon}{n}} 2^{-n(H(X)+\epsilon)}
+	\end{split}
+\end{equation*}
+Therefore, we must have
+\[\abs{\tset{\epsilon}{n}} \le 2^{n(H(X)+\epsilon)},\]
+proving the third part.\\
+To prove the fourth part, note the second property implies that :
+\begin{equation*}
+	\begin{split}
+		1-\epsilon &< \Pr\left \{\tset{\epsilon}{n}\right \}\\
+		 &\le \sum_{(x_1,\dots,x_n)\in \tset{\epsilon}{n}}2^{-n(H(X)-\epsilon)}\\
+		 &= \abs{\tset{\epsilon}{n}} 2^{-n(H(X)+\epsilon)}
+	\end{split}
+\end{equation*}
+from which, it follows that,
+\[(1-\epsilon)2^{n(H(X)+\epsilon)} \le \abs{\tset{\epsilon}{n}}.\]
+\end{proof}
+\begin{remark}
+	It's important to note the following from the definition and the Theorem:
+	\begin{enumerate}
+		\item {The notion of typicality is only concerned with the probability of a sequence and not the actual sequence itself.}
+		\item {The second property means that a sequence $ (x_1,\dots,x_n) $ drawn from $ \supp{X}^n $ has a probability close to 1 ($ 1-\epsilon $ to be precise) to be present in $ \tset{\epsilon}{n} $(!)}
+		\item {Moreover, the number of elements in typical set is nearly $ 2^{nH} $.}
+	\end{enumerate}
+\end{remark}
+\hrulefill
+\newpage
+\section{Random Processes}
+\begin{definition}
+	(\textbf{Stationary Random Process}) A random process is said to be stationary if:
+	\begin{equation}
+		\defeq{\Pr\{X_1=x_1,\dots,X_n=x_n\} = \Pr\{X_{k+1} = x_1,\dots, X_{k+n} = x_n\}\;\forall n,k\;\text{and}\;(x_1,\dots,x_n)\in \supp{X}.}
+	\end{equation}
+\end{definition}
+\begin{remark}
+	An example of a stationary process is a Markov Process.
+\end{remark}
+\hrulefill
+
+\begin{definition}
+(\textbf{Markov Process}) A discrete Random Process is said to be a Markov Process if:
+	\begin{equation}
+		\defeq{\Pr\{X_{n+1}\given X_n = x_n,\dots,X_1 = x_1\} = &\Pr\{X_{n+1} = x_{n+1}\given X_n = x_n\}\\
+		&\forall\; x_1,x_2,\dots,x_n,x_{n+1}\in \supp{X}.}
+	\end{equation}
+\end{definition}
+\begin{remark}
+	A Markov process is said to be \textbf{Time Invariant} if the conditional probability $ p(x_{n+1}\given x_n) $ does not depend on $ n $. In other words:
+	\begin{equation}
+		\Pr\{X_{n+1} = x\given X_n = y\} = \Pr\{X_2 = x\given X_1 = y\} \;\text{for all }x,y\in \supp{X}.
+	\end{equation}
+\end{remark}
+\hrulefill
+\subsection{Entropy Rate}
+\begin{definition}
+	(\textbf{Entropy of a Random Sequence}) The entropy of the random sequence $ \{X_n\} $ is defined by
+\begin{equation}
+	\defeq{H(\supp{X}) = \lim_{n\to \infty} \frac{1}{n} H(X_1,\dots,X_n)\;\text{when the limit exists.}}
+\end{equation}
+\end{definition}
+\begin{remark}
+	This definition attempts to measure the rate at which the entropy of the sequence grows with $ n $. This is the \emph{per-symbol entropy of the $ n $ random variables.}
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Alternate Entropy of a Random Sequence}) One can alternately define entropy rate as 
+	\begin{equation}
+		\defeq{H^{\prime}(\supp{X}) = \lim_{n\to \infty} H(X_n \given X_{n-1}, X_{n-2},\dots,X_1)\;\text{when the limit exists.}}
+	\end{equation}
+\end{definition}
+\begin{remark}
+	This definition, however, defines entropy rate as \emph{the conditional entropy of the last random variable given all the previous.}
+\end{remark}
+\hrulefill
+
+The following theorem states that \textbf{the above two notions of entropy rate are same for stationary processes.}
+\begin{theorem}
+	For a stationary random process, the limits 
+	\[\lim_{n\to \infty}\frac{1}{n}H(X_1,\dots,X_n)\;\text{and} \lim_{n\to \infty} H(X_n \given X_{n-1},\dots,X_1)\;\text{exists}\]
+	and 
+	\begin{equation}
+		\theoreq{H(\supp{X}) = H^{\prime}(\supp{X}).}
+	\end{equation}
+\end{theorem}
+\hrulefill
+\begin{theorem}
+	For a stationary Markov Chain, the entropy rate is given by:
+	\begin{equation}
+		\theoreq{H(\supp{X}) &= H^{\prime}(\supp{X}) \\
+	&= \lim_{n\to \infty} H(X_{n}\given X_{n-1},\dots,X_1)\\
+	&= \lim_{n\to \infty} H(X_n\given X_{n-1})\\
+	&= H(X_2\given X_1) 	
+	}
+	\end{equation}
+\end{theorem}
+\hrulefill
+\newpage
+\section{Codes}
+\begin{definition}
+	(\textbf{Source Code}) A source code $ C $ for a random variable $ X $ is the following map:
+	\begin{equation}
+		\defeq{C : \supp{X} &\longrightarrow \mathcal{D}^{*}\\
+	&\text{where, $ \supp{X} $ is the range of $ X $ and,}\\
+		&\text{$ \mathcal{D}^{*} $ is the set of finite-length strings of symbols from a $ D $-ary alphabet.}	
+	}
+	\end{equation}
+Note that for $ x\in \supp{X} $:
+\begin{itemize}
+\item {$ C(x) \in \mathcal{D}^{*}$ is the code associated to $ x $ by the above map.}
+\item { $ l(x) $ denote the length of the code $ C(x) $.}
+\end{itemize} 
+\end{definition}
+\hrulefill
+\begin{definition}
+	(\textbf{Average Length of Code}) The average length of a source code $ C $ defined over the random variable $ X $ with distribution $ p(x) $ is given by:
+	\begin{equation}
+		\defeq{L(C) = \sum_{x\in \supp{X}} p(x) l(x)}
+	\end{equation}
+\end{definition}
+\hrulefill
+\begin{definition}
+	(\textbf{Non-Singular Code}) A source code $ C : \supp{X} \to \mathcal{D}^{*} $ is called Non-Singular if the map $ C $ is injective. That is,
+	\begin{equation}
+		\defeq{C(x) = C(y) \implies x= y\;\text{for } x,y\in \supp{X}.}
+	\end{equation}
+\end{definition}
+\begin{remark}
+	Note that Non-Singularity makes sure that each event described by the range of the random variable $ X $ is uniquely identified by the corresponding code. That is, no two events have the same code.
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Code Extension}) The code extension $ C^{*} $ for a code $ C $ is given by the map $ C^{*} : \supp{X}^{*} \longrightarrow \mathcal{D}^{*}$ which takes each finite length string of elements of $ \supp{X} $ to the finite length string of elements of the $ D $-ary alphabet:
+	\begin{equation}
+		\defeq{C^{*}(x_1x_2\dots x_n) = C(x_1)C(x_2)\dots C(x_n).}
+	\end{equation}
+The multiplication $ C(x_1)C(x_2) $ means concatenation of the two $ D $-ary strings
+\end{definition}
+\begin{remark}
+	Note that $ C(x_1 x_2\dots x_n) $ and $ C^{*}(x_1 x_2\dots x_n) $ means the same thing after the definition. Moreover, even though the definition is motivated by obvious practical reasons, it's interesting to see that the reminiscence of an algebraic homomorphism can be seen via the above definition! The instructor however doesn't wish to go there for obvious pedagogical reasons.
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Uniquely Decodable Code}) A source code is called uniquely decodable if it's extension is Non-Singular.
+\end{definition}
+\begin{remark}
+	Another way of saying this is that a uniquely decodable code has only one possible source producing it. An example that is not a uniquely decodable code is$ A - 00, B - 100, C- 001 $, which has ambiguity when encoding $ AB $ and $ CA $. Therefore this is not a uniquely decodable code.
+\end{remark}
+\hrulefill
+\begin{definition}
+	(\textbf{Prefix-Free Code}) A code is called a prefix-free code if no code-word is a prefix of another code-word.
+\end{definition}
+\begin{remark}
+	Such codes are also called \emph{Instantaneous Codes} as one can \emph{instantaneously} infer the event in a sequence of events as soon as the code-word of that event is matched anywhere in the whole code.
+\end{remark}
+\hrulefill
+\newpage
+\subsection{Kraft's Inequality}
+Due to the obvious ease of decoding with Prefix-Free codes, our central aim hence is to construct minimum length, Prefix-Free Codes. One important result to this aim is given by the following theorem which \textbf{\emph{limits the set of all codeword lengths possible for Prefix-Free codes.}}
+\begin{theorem}
+	(\textbf{Kraft's Inequality}) For any Prefix-Free code over an alphabet of size $ D $, the countably infinite code-word lengths $ l_1,l_2,\dots $ satisfies
+	\begin{equation}\label{E-35}
+		\theoreq{\sum_{i } D^{-l_i} \le 1.}
+	\end{equation}
+Note that the code-word lengths $ l_1,l_2,\dots $ here correspond to the length of the source code of each of the symbols/events for whom the encoding is being done.
+\end{theorem}
+\begin{remark}
+	Conversely, if $ l_1,l_2,\dots $ are countable natural numbers which satisfies the above equation, then there exists a prefix-free code with these code-word lengths. 
+\end{remark}
+\hrulefill
+\subsection{Optimal Codes}
+Kraft's Inequality showed us the necessary and sufficient conditions to guarantee the existence of Prefix-Free codes. We now deal with the problem of actually finding the Prefix-Free codes with minimum expected length. \\\\
+Consider the following chain of statements:
+\begin{enumerate}
+	\item {In order to find the minimum length prefix-free codes, by Kraft's Inequality, it is sufficient to find natural numbers $ l_1,\dots,l_m $ satisfying Kraft's Inequality and that the average expected length is the least amongst the other possible prefix-free codes.}
+	\item {This hence becomes the following minimization problem:
+\begin{equation}
+	\begin{split}
+		\text{Minimize : }& L = \sum_{i} p_i l_i\;\;\text{over all integers }l_1,l_2,\dots l_m\\
+		&\text{satisfying,}\\
+		&\sum_{i}D^{-l_i} \le 1
+	\end{split}
+\end{equation}	
+}
+\item {Using the general method of \emph{Lagrange Multipliers}, we transform the above Minimization problem into the following equation (note that we remove the integer constraint on $ l_i $'s and consider the inequality as an equality):
+\begin{equation*}
+	\begin{split}
+		J = \sum_{i} p_il_i + \lambda\sum_{i}D^{-l_i}
+	\end{split}
+\end{equation*}
+Then the stationary points of $ J $ can be found by setting derivative to zero:
+\begin{equation*}
+	\begin{split}
+		\pder{J}{l_i} = p_i  -\lambda  D^{-l_i} \ln D &= 0\\
+		\implies D^{-l_i} &= \frac{p_i}{\lambda  \ln D}
+	\end{split}
+\end{equation*}
+}
+\item {Substituting $  D^{-l_i} = \frac{p_i}{\lambda  \ln D} $ in the Minimization constraint $ \sum_{i} D^{-l_i} = 1$, we see
+\begin{equation*}
+	\begin{split}
+		\frac{1}{\lambda \ln D} \sum_{i}p_i &= 1\\
+		\frac{1}{\ln D} &= \lambda
+	\end{split}
+\end{equation*}
+Substituting this $ \lambda $ in $ D^{-l_i} = \frac{p_i}{\lambda  \ln D} $, we get
+\begin{equation}
+	\begin{split}
+		p_i &= D^{-l_i}\\
+		\implies\;\;\; l_i&= -\log_{D} p_i
+	\end{split}
+\end{equation}
+which is the required condition for minimum average length Prefix-Free codes!
+}
+\end{enumerate}
+
+\end{document}
